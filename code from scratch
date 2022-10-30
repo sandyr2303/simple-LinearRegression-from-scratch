@@ -1,0 +1,65 @@
+# linear regression from scratch
+
+class SimpleLinearRegression:
+    def __init__(self):
+        self.intercept = None
+        self.slope = None
+
+    def fit(self, X_train, y_train):
+        NUM = 0
+        DEN = 0
+        for i in range(len(X_train)):
+            NUM += (X_train[i] - X_train.mean()) * (y_train[i] - y_train.mean())
+            DEN += (X_train[i] - X_train.mean()) (X_train[i] - X_train.mean())
+        self.slope = NUM / DEN
+        self.intercept = y_train.mean() - self.slope * X_train.mean()
+
+        # $formula
+        # m = NUM / DEN
+        # b = y.mean() - m * x.mean()
+
+        # NUM = sum of (x - x.mean()) * (y - y.mean())
+        # DEN = sum of (x - x.mean()) squared
+
+        # m = sum of (x - x.mean()) * (y - y.mean()) / sum of (x - x.mean()) squared
+        # b = y.mean() - m * x.mean()
+
+        # m = sum of (x - x.mean()) * (y - y.mean()) / sum of (x - x.mean()) squared
+        # b = y.mean() - sum of (x - x.mean()) * (y - y.mean()) / sum of (x - x.mean()) squared * x.mean() 
+
+
+    def predict(self, X_test):
+        y_pred = []
+        for i in range(len(X_test)):
+            y_pred.append(self.slope * X_test[i] + self.intercept)
+        return y_pred
+
+    def score(self, X_test, y_test):
+        y_pred = self.predict(X_test)
+        u = ((y_test - y_pred) (y_test - y_pred)).sum()
+        v = ((y_test - y_test.mean()) (y_test - y_test.mean())).sum()
+        return 1 - u / v
+
+        #$score formula
+
+        # 1 - (u / v)
+        # u = ((y_test - y_pred) (y_test - y_pred)).sum()
+        # v = ((y_test - y_test.mean()) (y_test - y_test.mean())).sum()
+
+        # u = sum of squared errors
+        # v = sum of squared total
+
+        # u = sum of (y_test - y_pred) squared
+        # v = sum of (y_test - y_test.mean()) squared
+
+        # u = sum of (y_test - (m * x_test + b)) squared
+        # v = sum of (y_test - y_test.mean()) squared
+
+        # u = sum of (y_test - m * x_test - b) squared
+        # v = sum of (y_test - y_test.mean()) squared
+
+        # u = sum of (y_test - m * x_test) squared - 2 * b * sum of (y_test - m * x_test) + b * b * sum of (x_test - x_test.mean()) squared
+        # v = sum of (y_test - y_test.mean()) squared
+
+    def __repr__(self):
+        return "SimpleLinearRegression()"
